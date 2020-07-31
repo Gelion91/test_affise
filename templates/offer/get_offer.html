@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <h3>Доступные офферы:</h3>
+        </div>
+        <div class="col-8">
+            <p>id: {{ result['id'] }}</p>
+            <p>Offer_id: {{ result['offer_id'] }}</p>
+            <p>title: {{ result['title'] }}</p>
+            <p>payments: {{ countries }}</p>
+        </div>
+    </div>
+    <p></p>
+    <div class="row">
+        <div class="col-4">
+            <h3>Conversion:</h3>
+        </div>
+        <div class="col-8">
+            <p>id: {{ conversion['id'] }}</p>
+            <p>action_id: {{ conversion['action_id'] }}</p>
+            <p>status: {{ conversion['status'] }}</p>
+            <p>offer: {{ conversion['offer'] }}</p>
+        </div>
+    </div>
+    <div>
+        <p></p>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                {% for message in messages %}
+                    {{ message }}<br>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+{% endblock %}
