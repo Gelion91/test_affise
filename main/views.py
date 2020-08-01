@@ -7,17 +7,13 @@ blueprint = Blueprint('main', __name__)
 @blueprint.route('/')
 @blueprint.route('/getoffer')
 def get_offer():
+    """Получение данных из api"""
     url = 'http://api.cpanomer1.affise.com/3.0/partner/offers'
-    params = {
-        'API-Key' : current_app.config['API_KEY']
-    }
-    session_offer = Session().get(url, params=params)
-
-    url_conversion = 'http://api.cpanomer1.affise.com/3.0/stats/conversions'
+    url_conversion = 'http://api.cpanomer1.affise.com/3.0/stats/conversions?date_from='
     params = {
         'API-Key': current_app.config['API_KEY'],
-        'date_from': ''
     }
+    session_offer = Session().get(url, params=params)
     session_conv = Session().get(url_conversion, params=params)
     try:
         offer = session_offer.json()
@@ -30,8 +26,9 @@ def get_offer():
         conversion = conversion['conversions'][0]
         return render_template('offer/get_offer.html', result=offer, countries=list(countries), conversion=conversion)
 
-    except (ConnectionError, Timeout, TooManyRedirects, AttributeError) as e:
+    except (ConnectionError, Timeout, TooManyRedirects, AttributeError, KeyError) as e:
         print(e)
+        return 'Ooops'
 
 
 
